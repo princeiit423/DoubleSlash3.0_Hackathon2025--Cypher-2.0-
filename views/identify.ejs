@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrios Farming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        </style>
+</head>
+<body class="bg-gray-100 overflow-x-hidden">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <img src="https://i.postimg.cc/fyp7mwPn/Pngtree-agricultural-logo-design-6962123.png" alt="Agrios Logo" class="w-12 h-12">
+                <h1 class="text-2xl font-bold text-green-700">Cypher 2.0</h1>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="hidden md:flex space-x-6 text-sm text-gray-700">
+                <div>📞 +918251****09</div>
+                <div>✉️ Cypher2.0_Slash3.0_@gmail.com</div>
+                <div>📍 Kolkata, India</div>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="flex space-x-3 text-gray-700">
+                <a href="#">🔵</a>
+                <a href="#">🟠</a>
+                <a href="#">🔴</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class=" flex flex-row center space-between " style="background-color: #E4E2D7">
+        <div class="max-w-7xl mx-auto flex justify-between items-center py-3 px-4">
+            <ul class="overflow-x-hidden flex space-x-4 font-sans md:gap-14" style= " color: #878680">
+                <li><a href="/" class="hover:text-black">Home</a></li>
+                <li><a href="#" class="hover:text-black">About</a></li>
+                <li><a href="#Service" class="hover:text-black">Services</a></li>
+                <li><a href="/health" class="hover:text-black">Crop health</a></li>
+                <li><a href="/identify" class="hover:text-black">Plant detection</a></li>
+                <li><a href="#contact" class="hover:text-black">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+     <!-- Hero Section -->
+     <section class="relative w-full min-h-screen flex items-center justify-center text-center px-6 lg:px-20">
+        <div class="max-w-5xl w-full">
+
+            <!-- Text Content -->
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-green-700 leading-tight">
+                    AI-Powered Plant Identification
+                </h1>
+                <p class="mt-4 text-gray-600 text-lg md:text-xl">
+                    Upload an image of your plant to analyze its types and get AI-driven insights.
+                </p>
+            </div>
+
+            <!-- Upload Box -->
+             <form action="/identify" method="POST" enctype="multipart/form-data">
+            <div class="mt-8 flex flex-col items-center">
+                <label for="image" class="cursor-pointer flex flex-col items-center justify-center w-72 md:w-96 h-48 border-2 border-dashed border-green-500 bg-white p-6 rounded-lg text-center hover:bg-green-100 transition-all">
+                    <input type="file" name="image" id="image" class="hidden" required>
+                    <div id="uploadPlaceholder" class="flex flex-col items-center">
+                        <svg class="w-14 h-14 text-green-500 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h14m-6 4l4 4m0 0l4-4m-4 4V4"></path>
+                        </svg>
+                        <p class="text-gray-600 font-medium">Drag & Drop or Click to Upload</p>
+                        <p class="text-sm text-gray-400 mt-1">Upload an image of your Plant (JPG, PNG, JPEG)</p>
+                    </div>
+                    
+                </label>
+
+                <!-- Button to Process Image -->
+                <button type="submit"  class="mt-6 px-8 py-3 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Analyze Crop Health
+                </button>
+            </div>
+        </form>
+        </div>
+    </section>
+
+
+
+    <footer class="bg-[#1a1a12] py-12" id="contact">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <!-- Logo & About -->
+            <div>
+                <h2 class="text-2xl font-bold flex items-center space-x-2">
+                    <img src="https://via.placeholder.com/40" alt="Logo" class="w-10 h-10 rounded-full">
+                    <span class="text-white">Cypher Farming</span>
+                </h2>
+                <p class="mt-3 text-gray-400 text-sm">
+                    There are many variations of passages of lorem ipsum available, but the majority suffered.
+                </p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Explore Links -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">Explore</h3>
+                <ul class="mt-4 space-y-2 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white">About</a></li>
+                    <li><a href="#" class="hover:text-white">Services</a></li>
+                    <li><a href="#" class="hover:text-white">Our Projects</a></li>
+                    <li><a href="#" class="hover:text-white">Meet the Farmers</a></li>
+                    <li><a href="#" class="hover:text-white">Latest News</a></li>
+                    <li><a href="#" class="hover:text-white">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- News Section -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">News</h3>
+                <ul class="mt-4 space-y-3">
+                    <li>
+                        <a href="#" class="text-white font-semibold hover:underline">Bringing Food Production Back to Cities</a>
+                        <p class="text-yellow-500 text-sm">July 5, 2022</p>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white font-semibold hover:underline">The Future of Farming, Smart Irrigation Solutions</a>
+                        <p class="text-yellow-500 text-sm">July 5, 2022</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">Contact</h3>
+                <p class="mt-4 text-gray-400"><i class="fas fa-phone-alt text-yellow-500"></i> 666 888 0000</p>
+                <p class="text-gray-400"><i class="fas fa-envelope text-yellow-500"></i> needhelp@company.com</p>
+                <p class="text-gray-400"><i class="fas fa-map-marker-alt text-yellow-500"></i> 80 Brooklyn, New York, USA</p>
+                
+                <!-- Email Subscription -->
+                <div class="mt-4 flex">
+                    <input type="email" placeholder="Your Email Address" class="w-full p-2 rounded-l-lg bg-gray-800 text-white outline-none">
+                    <button class="bg-green-600 px-4 py-2 rounded-r-lg hover:bg-green-700">
+                        <i class="fas fa-paper-plane text-white"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="text-center text-gray-400 text-sm mt-10 border-t border-gray-700 pt-4">
+            © All Copyright 2025 by Cypher 2.0
+            <div class="mt-2">
+                <a href="#" class="hover:text-white">Terms of Use</a> |
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

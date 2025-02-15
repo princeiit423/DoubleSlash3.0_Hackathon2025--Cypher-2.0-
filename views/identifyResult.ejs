@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Identification Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #fff; /* White text */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #1e1e1e; /* Darker card */
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #4CAF50; /* Green accent */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section {
+            margin-bottom: 30px;
+            animation: slideInUp 1.5s ease-in-out;
+        }
+        .section h2 {
+            font-size: 1.8rem;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        .image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            margin-bottom: 20px;
+            border: 3px solid #4CAF50;
+        }
+        .image:hover {
+            transform: scale(1.05);
+        }
+        p {
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .similar-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .similar-images img {
+            max-width: 200px;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            transition: transform 0.3s ease-in-out;
+        }
+        .similar-images img:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .btn-link {
+            text-decoration: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            outline: none;
+        }
+        .btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        .btn:active {
+            background-color: #397d3d;
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <img src="https://i.postimg.cc/fyp7mwPn/Pngtree-agricultural-logo-design-6962123.png" alt="Agrios Logo" class="w-12 h-12">
+                <h1 class="text-2xl font-bold text-green-700">Cypher 2.0</h1>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="hidden md:flex space-x-6 text-sm text-gray-700">
+                <div>📞 +918251****09</div>
+                <div>✉️ Cypher2.0_Slash3.0_@gmail.com</div>
+                <div>📍 Kolkata, India</div>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="flex space-x-3 text-gray-700">
+                <a href="#">🔵</a>
+                <a href="#">🟠</a>
+                <a href="#">🔴</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class=" flex flex-row center space-between " style="background-color: #E4E2D7">
+        <div class="max-w-7xl mx-auto flex justify-between items-center py-3 px-4">
+            <ul class="overflow-x-hidden flex space-x-4 font-sans md:gap-14" style= " color: #878680">
+                <li><a href="/" class="hover:text-black">Home</a></li>
+                <li><a href="#" class="hover:text-black">About</a></li>
+                <li><a href="#Service" class="hover:text-black">Services</a></li>
+                <li><a href="/health" class="hover:text-black">Crop health</a></li>
+                <li><a href="/identify" class="hover:text-black">Plant detection</a></li>
+                <li><a href="#contact" class="hover:text-black">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <h1>Plant Identification Result</h1>
+
+        <div class="section">
+            <h2>Plant Status</h2>
+            <p><strong>Is Plant:</strong> <%= result.result.is_plant.binary ? 'Yes' : 'No' %> (Probability: <%= (result.result.is_plant.probability * 100).toFixed(2) %>%)</p>
+        </div>
+
+        <div class="section">
+            <h2>Classification</h2>
+            <% result.result.classification.suggestions.forEach(suggestion => { %>
+                <div>
+                    <h3><%= suggestion.name %> (Probability: <%= (suggestion.probability * 100).toFixed(2) %>%)</h3>
+                    <% if (suggestion.details.common_names && suggestion.details.common_names.length > 0) { %>
+                        <p><strong>Common Names:</strong> <%= suggestion.details.common_names.join(', ') %></p>
+                    <% } else { %>
+                        <p><strong>Common Names:</strong> Not available</p>
+                    <% } %>
+                    <p><strong>Taxonomy:</strong></p>
+                    <ul>
+                        <li><strong>Kingdom:</strong> <%= suggestion.details.taxonomy.kingdom %></li>
+                        <li><strong>Phylum:</strong> <%= suggestion.details.taxonomy.phylum %></li>
+                        <li><strong>Class:</strong> <%= suggestion.details.taxonomy.class %></li>
+                        <li><strong>Order:</strong> <%= suggestion.details.taxonomy.order %></li>
+                        <li><strong>Family:</strong> <%= suggestion.details.taxonomy.family %></li>
+                        <li><strong>Genus:</strong> <%= suggestion.details.taxonomy.genus %></li>
+                    </ul>
+                    <% if (suggestion.details.description) { %>
+                        <p><strong>Description:</strong> <%= suggestion.details.description.value %></p>
+                    <% } %>
+                    <p><a href="<%= suggestion.details.url %>" target="_blank" style="color: #4CAF50; text-decoration: underline;">Learn more on Wikipedia</a></p>
+                    <div class="section">
+                        <h3>Similar Images:</h3>
+                        <div class="similar-images">
+                            <% suggestion.similar_images.forEach(img => { %>
+                                <img style="height: 200px; width: 200px; margin: 10px;" src="<%= img.url_small %>" alt="Similar Image">
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <a class="btn-link" href="/download-health"><button class="btn">Download Result</button></a>
+    </div>
+
+    <footer class="bg-[#1a1a12] py-12" id="contact">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <!-- Logo & About -->
+            <div>
+                <h2 class="text-2xl font-bold flex items-center space-x-2">
+                    <img src="https://i.postimg.cc/fyp7mwPn/Pngtree-agricultural-logo-design-6962123.png" alt="Logo" class="w-10 h-10 rounded-full">
+                    <span class="text-white">Cypher Farming</span>
+                </h2>
+                <p class="mt-3 text-gray-400 text-sm">
+                    There are many variations of passages of lorem ipsum available, but the majority suffered.
+                </p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-lg"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Explore Links -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">Explore</h3>
+                <ul class="mt-4 space-y-2 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white">About</a></li>
+                    <li><a href="#" class="hover:text-white">Services</a></li>
+                    <li><a href="#" class="hover:text-white">Our Projects</a></li>
+                    <li><a href="#" class="hover:text-white">Meet the Farmers</a></li>
+                    <li><a href="#" class="hover:text-white">Latest News</a></li>
+                    <li><a href="#" class="hover:text-white">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- News Section -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">News</h3>
+                <ul class="mt-4 space-y-3">
+                    <li>
+                        <a href="#" class="text-white font-semibold hover:underline">Bringing Food Production Back to Cities</a>
+                        <p class="text-yellow-500 text-sm">July 5, 2022</p>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white font-semibold hover:underline">The Future of Farming, Smart Irrigation Solutions</a>
+                        <p class="text-yellow-500 text-sm">July 5, 2022</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div>
+                <h3 class="text-xl font-semibold border-b-2 border-green-500 pb-1 text-white">Contact</h3>
+                <p class="mt-4 text-gray-400"><i class="fas fa-phone-alt text-yellow-500"></i> +91 8581088**0</p>
+                <p class="text-gray-400"><i class="fas fa-envelope text-yellow-500"></i> cypher2.0_slah3.0_@gmail.com</p>
+                <p class="text-gray-400"><i class="fas fa-map-marker-alt text-yellow-500"></i> Kolkata, West Bengal</p>
+                
+                <!-- Email Subscription -->
+                <div class="mt-4 flex">
+                    <input type="email" placeholder="Your Email Address" class="w-full p-2 rounded-l-lg bg-gray-800 text-white outline-none">
+                    <button class="bg-green-600 px-4 py-2 rounded-r-lg hover:bg-green-700">
+                        <i class="fas fa-paper-plane text-white"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="text-center text-gray-400 text-sm mt-10 border-t border-gray-700 pt-4">
+            © All Copyright 2025 by Cypher 2.0
+            <div class="mt-2">
+                <a href="#" class="hover:text-white">Terms of Use</a> |
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+   
+</body>
+</html>
