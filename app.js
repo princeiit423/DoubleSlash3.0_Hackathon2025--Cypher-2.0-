@@ -44,7 +44,7 @@ const upload = multer({
 });
 
 const API_KEY = process.env.API_KEY;
-const BASE_URL = 'https://plant.id/api/v3';
+const BASE_URL = process.env.BASE_URL;
 
 let lastResult = null; 
 
@@ -106,28 +106,6 @@ app.get('/weather', (req, res) => {
 res.render('weatherInput');
 });
 
-app.post("/getWeather", async (req, res) => {
-
-  const API_KEY = "9W9XCJ75CCK3UZ6CUAR8J6BRC";
-const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
-  const { city, state, country } = req.body;
-
-  if (!city || !state || !country) {
-      return res.status(400).json({ error: "Please provide city, state, and country." });
-  }
-
-  try {
-      const apiUrl = `${BASE_URL}/${city},${state},${country}/2025-02-01?key=${API_KEY}`;
-
-      // Sending request to Weather API
-      const weatherData = await axios.get(apiUrl);
-
-      res.render("weather" , {weatherData});
-
-  } catch (error) {
-      res.status(500).json({ error: "Failed to fetch weather data." });
-  }
-});
 
 // Route to handle identification
 app.post('/identify', upload.single('image'), async (req, res) => {
