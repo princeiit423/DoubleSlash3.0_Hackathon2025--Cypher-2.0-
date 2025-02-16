@@ -3,9 +3,13 @@ const multer = require('multer');
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
+const mongoose = require("mongoose");
 const pdf = require('html-pdf');
 const ejs = require('ejs');
+const bodyParser = require("body-parser");
 const { Buffer } = require('buffer');
+const Crop = require("./models/Crop.js");
+//const MongoStore = require("connect-mongo");
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +20,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+try {
+  mongoose.connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log("connected to DB");
+} catch (error) {
+  console.log("error", error.message);
+}
 
 const getISO8601DateTime = () => {
     const now = new Date();
@@ -36,10 +52,81 @@ app.get("/",(req,res)=>{
   res.render('index');
 })
 
+app.get("/management", (req,res)=>{
+  res.render('management');
+})
+
+app.post("/management", async(req,res)=>{
+  try {
+    console.log("Received Data:", req.body);
+    const { farmer, cropDetails, soilAndWeather, fertilizerUsage, plantHealth } = req.body;
+
+    const newCrop = new Crop({
+      farmer: {
+          name: req.body["farmer[name]"],
+          contact: req.body["farmer[contact]"],
+          location: {
+              city: req.body["farmer[location][city]"],
+              state: req.body["farmer[location][state]"],
+              country: req.body["farmer[location][country]"]
+          }
+      },
+      cropDetails: {
+          name: req.body["cropDetails[name]"],
+          variety: req.body["cropDetails[variety]"]
+      },
+      soilAndWeather: {
+          soilType: req.body["soilAndWeather[soilType]"],
+          pHLevel: req.body["soilAndWeather[pHLevel]"] ? parseFloat(req.body["soilAndWeather[pHLevel]"]) : null
+      },
+      fertilizerUsage: {
+          type: req.body["fertilizerUsage[type]"]
+      },
+      plantHealth: {
+          hasDiseaseSymptoms: req.body["plantHealth[hasDiseaseSymptoms]"] === "true",
+          symptomsDescription: req.body["plantHealth[symptomsDescription]"]
+      }
+  });
+
+  await newCrop.save();
+  res.send("Crop details saved successfully!");
+} catch (err) {
+    console.error(err);
+    res.status(500).send("Error saving crop data");
+}
+})
 // Route to display the identification form
 app.get('/identify', (req, res) => {
     //console.log(getISO8601DateTime());
   res.render('identify');
+});
+
+app.get('/weather', (req, res) => {
+  //console.log(getISO8601DateTime());
+res.render('weatherInput');
+});
+
+app.post("/getWeather", async (req, res) => {
+
+  const API_KEY = "9W9XCJ75CCK3UZ6CUAR8J6BRC";
+const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
+  const { city, state, country } = req.body;
+
+  if (!city || !state || !country) {
+      return res.status(400).json({ error: "Please provide city, state, and country." });
+  }
+
+  try {
+      const apiUrl = `${BASE_URL}/${city},${state},${country}/2025-02-01?key=${API_KEY}`;
+
+      // Sending request to Weather API
+      const weatherData = await axios.get(apiUrl);
+
+      res.render("weather" , {weatherData});
+
+  } catch (error) {
+      res.status(500).json({ error: "Failed to fetch weather data." });
+  }
 });
 
 // Route to handle identification

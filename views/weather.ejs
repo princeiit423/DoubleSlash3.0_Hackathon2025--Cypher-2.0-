@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Weather Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        h2 { text-align: center; color: #2c3e50; }
+        .info { margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Weather Report for Agriculture</h2>
+        <div class="info">
+            <strong>Location:</strong> <%= weatherData.address %> <br>
+            <strong>Date:</strong> <%= weatherData.days[1].datetime %> <br>
+            <strong>Condition:</strong> <%= weatherData.days[1].conditions %> <br>
+            <strong>Temperature:</strong> Max: <%= weatherData.days[1].tempmax %>°F | Min: <%= weatherData.days[0].tempmin %>°F <br>
+            <strong>Humidity:</strong> <%= weatherData.days[1].humidity %>% <br>
+            <strong>Wind Speed:</strong> <%= weatherData.days[1].windspeed %> mph <br>
+            <strong>Precipitation:</strong> <%= weatherData.days[1].precip %> inches
+        </div>
+        
+        <h3>Hourly Weather</h3>
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Temp (°F)</th>
+                <th>Humidity (%)</th>
+                <th>Wind Speed (mph)</th>
+                <th>Condition</th>
+            </tr>
+            <% weatherData.days[0].hours.forEach(hour => { %>
+                <tr>
+                    <td><%= hour.datetime %></td>
+                    <td><%= hour.temp %></td>
+                    <td><%= hour.humidity %></td>
+                    <td><%= hour.windspeed %></td>
+                    <td><%= hour.conditions %></td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+</body>
+</html>
