@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const pdf = require('html-pdf');
 const ejs = require('ejs');
 const bodyParser = require("body-parser");
@@ -23,15 +23,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-try {
-  mongoose.connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("connected to DB");
-} catch (error) {
-  console.log("error", error.message);
-}
 
 const getISO8601DateTime = () => {
     const now = new Date();
